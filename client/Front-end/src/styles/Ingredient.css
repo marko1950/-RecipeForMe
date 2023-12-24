@@ -1,0 +1,26 @@
+.new-recipe-new_ingredient_div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: baseline;
+  width: 500px;
+}
+
+.new-recipe-quantity_text_field {
+  width: 100px;
+  margin: 10px;
+}
+
+.new-recipe-name_text_field {
+  width: 180px;
+}
+
+.new-recipe-add-button {
+  margin: 10px;
+}
+
+.new-recipe-new_ingredient_div-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
