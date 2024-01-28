@@ -23,6 +23,20 @@ app.get("/api/v1/recipes", async (req, res) => {
   }
 });
 
+//dohvacamo jedan recept iz baze(favorite) -> koji smo mi napravili
+app.get("/api/v1/recipes/:recipeId", async (req, res) => {
+  const recipeId = req.params.recipeId;
+  try {
+    const results = await db.query("SELECT * FROM recipes WHERE id=$1", [
+      recipeId,
+    ]);
+    console.log(results.rows);
+    res.status(201).json(results.rows[0]);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 //Spremamo novi recept u bazu
 app.post("/api/v1/recipes", async (req, res) => {
   console.log(req.body);

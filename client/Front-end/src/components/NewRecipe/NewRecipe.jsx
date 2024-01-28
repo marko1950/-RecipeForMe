@@ -13,8 +13,6 @@ const NewRecipe = () => {
   const [newRecipe, setNewRecipe] = useState({
     title: "",
     image: "",
-    instructions: "",
-    ingredients: [],
     servings: "",
     cuisine: "",
     totalTime: "",
@@ -22,23 +20,36 @@ const NewRecipe = () => {
   const [steps, setSteps] = useState([{}]);
   const [ingredients, setIngredients] = useState([{}]);
 
+  function generateRandomNumberInRange() {
+    const min = 5000000; // Minimum number (1 million)
+    const max = 5100000; // Maximum number (2 million)
+    const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+    return randomNumber;
+  }
+  const randomNumInRange = generateRandomNumberInRange();
+
   const handleButtonClick = async () => {
     try {
+      const newSteps = steps.map((item) => ({
+        number: item.step,
+        step: item.context,
+      }));
+      const newIngredients = ingredients.slice(0, -1);
       const result = await axios.post(`http://localhost:3005/api/v1/recipes`, {
-        recipe_id: recipe.id,
+        recipe_id: randomNumInRange,
         title: newRecipe.title,
         image: newRecipe.image,
-        instructions: steps,
-        ingredients: ingredients,
-        serving: newRecipe.servings,
+        instructions: newSteps,
+        ingredients: newIngredients,
+        servings: Number(newRecipe.servings),
         cuisine: newRecipe.cuisine,
-        totalTime: newRecipe.totalTime,
+        totalTime: Number(newRecipe.totalTime),
       });
+      console.log(result.data);
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(ingredients);
 
   function inputChange(event) {
     const { name, value } = event.target;
@@ -48,7 +59,7 @@ const NewRecipe = () => {
   const handleAddStep = () => {
     setSteps((prevState) => [...prevState, { step: " ", context: "" }]);
   };
-
+  console.log(newRecipe);
   return (
     <div className="recipe-details-container">
       <label htmlFor="title" className="title-label">
@@ -62,7 +73,7 @@ const NewRecipe = () => {
         onChange={inputChange}
       />
       <div className="main-details-div">
-        <PictureUpload />
+        <PictureUpload newRecipe={newRecipe} setNewRecipe={setNewRecipe} />
         <div className="details-div">
           <div className="details-label-input-div">
             {" "}
@@ -85,7 +96,7 @@ const NewRecipe = () => {
             <input
               type="number"
               id="time"
-              name="time"
+              name="totalTime"
               className="title-input"
               onChange={inputChange}
             />
@@ -96,7 +107,7 @@ const NewRecipe = () => {
               Servings:{" "}
             </label>
             <input
-              type="number  "
+              type="number"
               id="servings"
               name="servings"
               className="title-input"

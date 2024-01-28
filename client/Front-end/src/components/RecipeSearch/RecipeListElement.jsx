@@ -61,10 +61,10 @@ const RecipeListElement = ({ recipe, typeOfList, recipes, setRecipes }) => {
               handleDeleteButtonClick();
             }}
           >
-            <i class="fa-solid fa-trash fa-xl"></i>
+            <i className="fa-solid fa-trash fa-xl"></i>
           </button>
         ) : (
-          <div className="heart-button-wrapper">
+          <div class="heart-button-wrapper">
             <Heart
               isClick={isClick}
               onClick={() => {

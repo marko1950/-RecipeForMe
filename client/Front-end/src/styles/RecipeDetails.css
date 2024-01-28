@@ -59,7 +59,7 @@
 }
 
 .ingredients-list {
-  list-style: decimal;
+  list-style: circle;
   padding-left: 20px;
   padding-right: 20px;
 }
