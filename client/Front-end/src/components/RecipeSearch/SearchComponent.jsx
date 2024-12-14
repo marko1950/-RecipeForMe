@@ -4,14 +4,19 @@ import TextField from "@mui/material/TextField";
 import { useState, useContext } from "react";
 import axios from "axios";
 import RecipesContext from "../../context/RecipesContext";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const SearchComponent = ({ setRecipes, setTypeOfList }) => {
   const { ingredients } = useContext(RecipesContext);
   console.log(ingredients);
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const handleInputChange = (event) => {
     setSearchQuery(event.target.value);
   };
+
   const handleButtonClick = async () => {
     try {
       const result = await axios.get(
@@ -22,6 +27,12 @@ const SearchComponent = ({ setRecipes, setTypeOfList }) => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleButtonClickNewRecipes = (path) => {
+    const newPath = `${location.pathname}${path}`;
+    navigate(newPath);
+    console.log(navigate);
   };
 
   function toQueryString(AllIngredients) {
@@ -66,6 +77,12 @@ const SearchComponent = ({ setRecipes, setTypeOfList }) => {
       </button>
       <button className="search-button" onClick={handleButtonClickPantry}>
         Search By Your Ingredients
+      </button>
+      <button
+        className="search-button"
+        onClick={() => handleButtonClickNewRecipes("/new-recipe")}
+      >
+        Add New Recipe
       </button>
     </div>
   );

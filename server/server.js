@@ -23,7 +23,7 @@ app.get("/api/v1/recipes", async (req, res) => {
   }
 });
 
-//dohvacamo jedan recept iz baze(favorite) -> koji smo mi napravili
+//dohvacamo jedan recept iz baze(izabrani) -> koji smo mi napravili
 app.get("/api/v1/recipes/:recipeId", async (req, res) => {
   const recipeId = req.params.recipeId;
   try {
