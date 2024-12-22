@@ -6,6 +6,7 @@ import HomePage from "./components/HomePage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RecipeDetails from "./components/RecipeSearch/RecipeDetails";
 import NewRecipe from "./components/NewRecipe/NewRecipe";
+import MealScheduler from "./components/MealScheduler";
 function App() {
   return (
     <div>
@@ -33,6 +34,7 @@ function App() {
               </RecipesProvider>
             }
           />
+          <Route path="/meal-scheduler" element={<MealScheduler />} />
         </Routes>
       </Router>
     </div>

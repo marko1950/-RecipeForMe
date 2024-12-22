@@ -14,7 +14,7 @@ const NewIngredient = ({ setIngredients, ingredients }) => {
     }));
   };
 
-  //Dodajemo novi sastojak u tablicu ako ne postoji u njemu, u suporotnome samo doda vrijednost kvantitete
+  //Provjerava postoji li sastojak u bazi, ako ne postoji napravi ga, u suporotnome samo doda vrijednost kvantitete
   const saveNewIngredient = async () => {
     try {
       const existingIngredient = ingredients.find(
@@ -52,6 +52,7 @@ const NewIngredient = ({ setIngredients, ingredients }) => {
     name: "",
     quantity: "",
     unit: "kg",
+    expiery_date: "",
   });
 
   return (
@@ -86,7 +87,12 @@ const NewIngredient = ({ setIngredients, ingredients }) => {
         color="secondary"
       >
         <MenuItem value={"kg"}>kg</MenuItem>
-        <MenuItem value={"liters"}>liters</MenuItem>
+        <MenuItem value={"g"}>g</MenuItem>
+        <MenuItem value={"liters"}>l</MenuItem>
+        <MenuItem value={"ml"}>ml</MenuItem>
+        <MenuItem value={"cups"}>cups</MenuItem>
+        <MenuItem value={"tsp"}>teaspoons</MenuItem>
+        <MenuItem value={"pieces"}>pieces</MenuItem>
       </Select>
       <Button variant="outlined" color="success" onClick={saveNewIngredient}>
         Add

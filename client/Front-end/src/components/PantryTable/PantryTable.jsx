@@ -43,16 +43,16 @@ export default function PantryTable({ setIngredients, ingredients }) {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>
+            <TableCell sx={{ textAlign: "center" }}>
               <b>Name</b>
             </TableCell>
-            <TableCell>
+            <TableCell sx={{ textAlign: "center" }}>
               <b>Quantity</b>
             </TableCell>
-            <TableCell>
+            <TableCell sx={{ textAlign: "center" }}>
               <b>Unit</b>
             </TableCell>
-            <TableCell>
+            <TableCell sx={{ textAlign: "center" }}>
               <b>Delete ingredient</b>
             </TableCell>
           </TableRow>
@@ -64,10 +64,12 @@ export default function PantryTable({ setIngredients, ingredients }) {
                 key={row.name}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.quantity}</TableCell>
-                <TableCell>{row.unit}</TableCell>
-                <TableCell>
+                <TableCell sx={{ textAlign: "center" }}>{row.name}</TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
+                  {row.quantity}
+                </TableCell>
+                <TableCell sx={{ textAlign: "center" }}>{row.unit}</TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
                   <Button
                     variant="outlined"
                     color="warning"
