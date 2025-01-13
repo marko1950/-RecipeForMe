@@ -1,10 +1,10 @@
 import React from "react";
-import MealSchedulerTable from "./MealScheduler/MealSchedulerTable";
+import SchedulerTable from "./MealScheduler/SchedulerTable";
 
 const MealScheduler = () => {
   return (
-    <div>
-      <MealSchedulerTable />
+    <div className="container mx-auto">
+      <SchedulerTable />
     </div>
   );
 };

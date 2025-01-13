@@ -15,6 +15,9 @@ const HomePage = () => {
       <div>
         <button onClick={() => handleRedirect("/pantry")}>My Pantry</button>
         <button onClick={() => handleRedirect("/recipes")}>Recipes</button>
+        <button onClick={() => handleRedirect("/meal-scheduler")}>
+          MealScheduler
+        </button>
       </div>
     </div>
   );
