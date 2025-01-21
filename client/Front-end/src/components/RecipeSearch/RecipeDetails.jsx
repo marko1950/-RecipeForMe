@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { useState, useContext } from "react";
-import RecipesContext from "../../context/RecipesContext";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import "../../styles/RecipeDetails.css";
-import Heart from "react-animated-heart";
+import React, { useEffect } from 'react';
+import { useState, useContext } from 'react';
+import RecipesContext from '../../context/RecipesContext';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import '../../styles/RecipeDetails.css';
+import Heart from 'react-animated-heart';
 
 const RecipeDetails = () => {
   const [isClick, setClick] = useState(false);
@@ -16,49 +16,58 @@ const RecipeDetails = () => {
   const params = useParams();
 
   //dohvaćamo informacije o receptu
-  useEffect(
-    () => async () => {
+  useEffect(() => {
+    const fetchRecipe = async () => {
       try {
         let result;
+
         if (params.recipeId > 5000000 && params.recipeId < 5100000) {
+          // Dohvacanje recepta iz baze
           result = await axios.get(
             `http://localhost:3005/api/v1/recipes/${params.recipeId}`
           );
           setUserMadeRecipe(true);
           setRecipe(result.data);
 
-          //parsiranje instrukcija dobivene iz baze
-          const instructionsArray = convertToValidJSON([
-            result.data.instructions.slice(1, -1),
-          ]);
-          const arrayObjects = instructionsArray.map((str) => {
-            return JSON.parse(str);
-          });
-          setInstructions(arrayObjects || []);
+          // Postavljanje instrukcija u json oblik
+          const instructionsArray =
+            typeof result.data.instructions === 'string'
+              ? JSON.parse(result.data.instructions)
+              : result.data.instructions;
 
-          //parsiranje instrukcija dobivene iz baze
-          setUsedIngredients(convertToValidJSON([result.data.ingredients]));
+          setInstructions(
+            Array.isArray(instructionsArray) ? instructionsArray : []
+          );
 
-          setCuisines(result.data?.cuisines || ["Unkown"]);
+          const ingredientsArray =
+            typeof result.data.ingredients === 'string'
+              ? JSON.parse(result.data.ingredients)
+              : result.data.ingredients;
+
+          setUsedIngredients(
+            Array.isArray(ingredientsArray) ? ingredientsArray : []
+          );
+
+          setCuisines(result.data?.cuisines || ['Unknown']);
         } else {
-          {
-            result = await axios.get(
-              `https://api.spoonacular.com/recipes/${params.recipeId}/information?apiKey=250f0f0d9b0a47b38849a59921da109d`
-            );
-            setRecipe(result.data);
-            setInstructions(result.data.analyzedInstructions[0]?.steps || []);
-            setUsedIngredients(
-              result.data?.extendedIngredients || ["Ingredients not availabe"]
-            );
-            setCuisines(result.data?.cuisines || ["Unkown"]);
-          }
+          // Fetch recipe from Spoonacular API
+          result = await axios.get(
+            `https://api.spoonacular.com/recipes/${params.recipeId}/information?apiKey=250f0f0d9b0a47b38849a59921da109d`
+          );
+          setRecipe(result.data);
+          setInstructions(result.data.analyzedInstructions[0]?.steps || []);
+          setUsedIngredients(
+            result.data?.extendedIngredients || ['Ingredients not available']
+          );
+          setCuisines(result.data?.cuisines || ['Unknown']);
         }
       } catch (error) {
         console.log(error);
       }
-    },
-    [params.recipeId]
-  );
+    };
+
+    fetchRecipe();
+  }, [params.recipeId]);
 
   const handleButtonClick = async () => {
     try {
@@ -78,7 +87,7 @@ const RecipeDetails = () => {
   };
 
   function convertToValidJSON(arrayOfStrings) {
-    const jsonString = `[${arrayOfStrings.join(",")}]`;
+    const jsonString = `[${arrayOfStrings.join(',')}]`;
     return JSON.parse(jsonString);
   }
 
@@ -96,12 +105,12 @@ const RecipeDetails = () => {
               />
             </div>
             <div className="details-div">
-              <p className="total-time">Cuisine: {cuisines[0] || "Unkown"} </p>
+              <p className="total-time">Cuisine: {cuisines[0] || 'Unkown'} </p>
               <p className="total-time">
-                Total Time: {recipe.readyInMinutes || "Unkown"} min
+                Total Time: {recipe.readyInMinutes || 'Unkown'} min
               </p>
               <p className="total-time">
-                Servings: {recipe.servings || "Unkown"}{" "}
+                Servings: {recipe.servings || 'Unkown'}{' '}
               </p>
               <button
                 className="save-button"
@@ -131,7 +140,7 @@ const RecipeDetails = () => {
               <ul className="ingredients-list">
                 {usedIngredients.map((ingredient, index) => (
                   <li key={index} className="step-item">
-                    {ingredient.measures.metric.amount}{" "}
+                    {ingredient.measures.metric.amount}{' '}
                     {ingredient.measures.metric.unitShort} {ingredient.name}
                   </li>
                 ))}
@@ -152,13 +161,13 @@ const RecipeDetails = () => {
             </div>
             <div className="details-div">
               <p className="total-time">
-                Cuisine: {recipe.cuisine || "Unkown"}
+                Cuisine: {recipe.cuisine || 'Unkown'}
               </p>
               <p className="total-time">
-                Total Time: {recipe.totaltime || "Unkown"} min
+                Total Time: {recipe.totaltime || 'Unkown'} min
               </p>
               <p className="total-time">
-                Servings: {recipe.servings || "Unkown"}{" "}
+                Servings: {recipe.servings || 'Unkown'}{' '}
               </p>
             </div>
           </div>

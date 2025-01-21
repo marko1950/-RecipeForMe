@@ -1,14 +1,14 @@
-import React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { Button } from "@mui/material";
-import { useEffect } from "react";
-import axios from "axios";
+import React from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { Button } from '@mui/material';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 export default function PantryTable({ setIngredients, ingredients }) {
   const deleteIngredient = async (ingredient_id) => {
@@ -53,6 +53,9 @@ export default function PantryTable({ setIngredients, ingredients }) {
               <b>Unit</b>
             </TableCell>
             <TableCell>
+              <b>Expiry Date</b>
+            </TableCell>
+            <TableCell>
               <b>Delete ingredient</b>
             </TableCell>
           </TableRow>
@@ -62,11 +65,12 @@ export default function PantryTable({ setIngredients, ingredients }) {
             return (
               <TableRow
                 key={row.name}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell>{row.name}</TableCell>
                 <TableCell>{row.quantity}</TableCell>
                 <TableCell>{row.unit}</TableCell>
+                <TableCell>{row.expiry_date || 'N/A'}</TableCell>
                 <TableCell>
                   <Button
                     variant="outlined"

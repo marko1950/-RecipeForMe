@@ -1,8 +1,8 @@
-import React from "react";
-import { TextField, Button, Select, MenuItem } from "@mui/material";
-import { useState } from "react";
-import "../../../src/styles/Pantry.css";
-import axios from "axios";
+import React from 'react';
+import { TextField, Button, Select, MenuItem } from '@mui/material';
+import { useState } from 'react';
+import '../../../src/styles/Pantry.css';
+import axios from 'axios';
 
 const NewIngredient = ({ setIngredients, ingredients }) => {
   //Sprema promjene u newIngredient inputima
@@ -35,7 +35,7 @@ const NewIngredient = ({ setIngredients, ingredients }) => {
         setIngredients(updatedResult.data.data.ingredients);
       } else {
         const result = await axios.post(
-          "http://localhost:3005/api/v1/ingredients",
+          'http://localhost:3005/api/v1/ingredients',
           newIngredient
         );
         setIngredients((prevState) => [
@@ -49,9 +49,10 @@ const NewIngredient = ({ setIngredients, ingredients }) => {
   };
 
   const [newIngredient, setNewIngredient] = useState({
-    name: "",
-    quantity: "",
-    unit: "kg",
+    name: '',
+    quantity: '',
+    unit: 'kg',
+    expiry_date: '',
   });
 
   return (
@@ -85,9 +86,23 @@ const NewIngredient = ({ setIngredients, ingredients }) => {
         size="small"
         color="secondary"
       >
-        <MenuItem value={"kg"}>kg</MenuItem>
-        <MenuItem value={"liters"}>liters</MenuItem>
+        <MenuItem value={'kg'}>kg</MenuItem>
+        <MenuItem value={'g'}>g</MenuItem>
+        <MenuItem value={'liters'}>l</MenuItem>
+        <MenuItem value={'ml'}>ml</MenuItem>
+        <MenuItem value={'cups'}>cups</MenuItem>
+        <MenuItem value={'tsp'}>teaspoons</MenuItem>
+        <MenuItem value={'pieces'}>pieces</MenuItem>
       </Select>
+      <TextField
+        name="expiry_date"
+        label="Expiry Date"
+        type="date"
+        InputLabelProps={{ shrink: true }}
+        color="secondary"
+        size="small"
+        onChange={handleChange}
+      />
       <Button variant="outlined" color="success" onClick={saveNewIngredient}>
         Add
       </Button>

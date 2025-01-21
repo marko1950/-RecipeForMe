@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { TextField, Button, Select, MenuItem } from "@mui/material";
-import "../../../src/styles/Ingredient.css";
+import React, { useEffect, useState } from 'react';
+import { TextField, Button, Select, MenuItem } from '@mui/material';
+import '../../../src/styles/Ingredient.css';
 
 const Ingredient = ({ index, ingredient, ingredients, setIngredients }) => {
   const [newIngredient, setNewIngredient] = useState({
     name: ingredient.name,
     quantity: ingredient.quantity,
-    unit: ingredient.unit || "kg",
+    unit: ingredient.unit || 'kg',
   });
 
   const handleChange = (event) => {
@@ -19,8 +19,8 @@ const Ingredient = ({ index, ingredient, ingredients, setIngredients }) => {
   //dodajemo novi sastojak u tablici novog recepta
   const saveIngredient = () => {
     if (
-      newIngredient.name.trim() !== "" &&
-      newIngredient.quantity.trim() !== ""
+      newIngredient.name.trim() !== '' &&
+      newIngredient.quantity.trim() !== ''
     ) {
       setIngredients((prevState) => {
         const updatedIngredients = prevState.filter((x, index) => {
@@ -29,9 +29,9 @@ const Ingredient = ({ index, ingredient, ingredients, setIngredients }) => {
         });
         const a = [...updatedIngredients, newIngredient].filter((x, index) => {
           // onda dodajemo novi sastojak i brisemo jedan prazan koji  se stvara
-          return x.name !== "";
+          return x.name !== '';
         });
-        return [...a, { name: "", quantity: "", unit: "kg" }]; // dodajemo prazan sastojak kako korisnik moze unjeti podatke
+        return [...a, { name: '', quantity: '', unit: 'kg' }]; // dodajemo prazan sastojak kako korisnik moze unjeti podatke
       });
     }
   };
@@ -46,9 +46,9 @@ const Ingredient = ({ index, ingredient, ingredients, setIngredients }) => {
 
   useEffect(() => {
     setNewIngredient({
-      name: "",
-      quantity: "",
-      unit: "kg",
+      name: '',
+      quantity: '',
+      unit: 'kg',
     });
   }, []);
 
@@ -89,8 +89,13 @@ const Ingredient = ({ index, ingredient, ingredients, setIngredients }) => {
             size="small"
             color="secondary"
           >
-            <MenuItem value={"kg"}>kg</MenuItem>
-            <MenuItem value={"liters"}>liters</MenuItem>
+            <MenuItem value={'kg'}>kg</MenuItem>
+            <MenuItem value={'g'}>g</MenuItem>
+            <MenuItem value={'liters'}>l</MenuItem>
+            <MenuItem value={'ml'}>ml</MenuItem>
+            <MenuItem value={'cups'}>cups</MenuItem>
+            <MenuItem value={'tsp'}>teaspoons</MenuItem>
+            <MenuItem value={'pieces'}>pieces</MenuItem>
           </Select>
           <Button
             variant="outlined"
@@ -138,8 +143,8 @@ const Ingredient = ({ index, ingredient, ingredients, setIngredients }) => {
             color="secondary"
             readOnly
           >
-            <MenuItem value={"kg"}>kg</MenuItem>
-            <MenuItem value={"liters"}>liters</MenuItem>
+            <MenuItem value={'kg'}>kg</MenuItem>
+            <MenuItem value={'liters'}>liters</MenuItem>
           </Select>
           <Button
             variant="outlined"
