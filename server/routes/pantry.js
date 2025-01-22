@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pantry_controller = require("../controllers/pantry");
+const pantry_controller = require("../controllers/pantryController");
 
 //get all ingredients from pantry
 router.get("/", pantry_controller.getIngredients);

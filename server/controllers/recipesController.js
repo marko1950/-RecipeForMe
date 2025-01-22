@@ -32,6 +32,7 @@ exports.getRecipe = async (req, res) => {
 
 //save a recipe to database
 exports.saveRecipe = async (req, res) => {
+  // cons {} = req.bod;
   try {
     const results = await db.query(
       "INSERT INTO recipes (id,title,image,instructions,ingredients,servings,cuisine,totalTime) values ($1,$2,$3,$4,$5,$6,$7,$8) returning *",

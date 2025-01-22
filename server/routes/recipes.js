@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const recipe_controller = require("../controllers/recipes");
+const recipe_controller = require("../controllers/recipesController");
 
 //get favorite recipes from database
 router.get("/", recipe_controller.getFavouriteRecipes);

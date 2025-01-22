@@ -1,12 +1,14 @@
-import Pantry from "../src/components/Pantry";
-import "./App.css";
-import Recipes from "./components/Recipes";
+import Pantry from "./pages/Pantry";
+import Recipes from "./pages/Recipes";
 import { RecipesProvider } from "./context/RecipesContext";
-import HomePage from "./components/HomePage";
+import HomePage from "./pages/HomePage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RecipeDetails from "./components/RecipeSearch/RecipeDetails";
 import NewRecipe from "./components/NewRecipe/NewRecipe";
-import MealScheduler from "./components/MealScheduler";
+import MealScheduler from "./pages/MealScheduler";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+
 function App() {
   return (
     <div>
@@ -35,6 +37,8 @@ function App() {
             }
           />
           <Route path="/meal-scheduler" element={<MealScheduler />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </Router>
     </div>

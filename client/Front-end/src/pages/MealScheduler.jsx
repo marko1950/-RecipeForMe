@@ -1,5 +1,5 @@
 import React from "react";
-import SchedulerTable from "./MealScheduler/SchedulerTable";
+import SchedulerTable from "../components/MealScheduler/SchedulerTable";
 
 const MealScheduler = () => {
   return (

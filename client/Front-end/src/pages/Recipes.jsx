@@ -1,7 +1,7 @@
 import React from "react";
-import SearchComponent from "./RecipeSearch/SearchComponent";
+import SearchComponent from "../components/RecipeSearch/SearchComponent";
 import { useState, useEffect } from "react";
-import RecipesList from "./RecipeSearch/RecipesList";
+import RecipesList from "../components/RecipeSearch/RecipesList";
 import axios from "axios";
 const Recipes = () => {
   const [recipes, setRecipes] = useState([]);

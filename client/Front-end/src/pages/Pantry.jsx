@@ -1,9 +1,9 @@
 import React from "react";
 import "../../src/styles/Pantry.css";
 import { useEffect, useContext } from "react";
-import PantryTable from "./PantryTable/PantryTable";
+import PantryTable from "../components/PantryTable/PantryTable";
 import RecipesContext from "../context/RecipesContext";
-import NewIngredient from "./PantryTable/NewIngredient";
+import NewIngredient from "../components/PantryTable/NewIngredient";
 
 export default function Pantry() {
   const { ingredients, setIngredients } = useContext(RecipesContext);

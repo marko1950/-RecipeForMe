@@ -4,10 +4,8 @@ const db = require("../db");
 exports.getIngredients = async (req, res) => {
   console.log(req.body);
   try {
-    const results = await db.query("SELECT * FROM ingredients");
-    res
-      .status(201)
-      .json({ status: "success", data: { ingredients: results.rows } });
+    const { rows } = await db.query("SELECT * FROM ingredients");
+    res.status(201).json({ status: "success", data: { ingredients: rows } });
     console.log(results.rows);
   } catch (error) {
     console.log(error);
