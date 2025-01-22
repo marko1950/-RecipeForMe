@@ -1,0 +1,20 @@
+/* Highlight the entire week */
+.highlight-week {
+  background-color: rgba(135, 238, 250, 0.525); /* Light blue */
+  border-radius: 5px;
+  border-radius: 0%;
+}
+
+/* Optional: Add hover effects */
+.highlight-week:hover {
+  background-color: rgb(135, 206, 250);
+  cursor: pointer;
+}
+
+/* Position calendar popup */
+.react-calendar {
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: white;
+  z-index: 10;
+}

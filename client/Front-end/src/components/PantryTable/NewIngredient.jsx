@@ -3,8 +3,15 @@ import { TextField, Button, Select, MenuItem } from "@mui/material";
 import { useState } from "react";
 import "../../../src/styles/Pantry.css";
 import axios from "axios";
+import FuzzyInput from "../core/FuzzySearch/FuzzyInput";
 
 const NewIngredient = ({ setIngredients, ingredients }) => {
+  const [newIngredient, setNewIngredient] = useState({
+    name: "",
+    quantity: "",
+    unit: "kg",
+    expiry_date: "",
+  });
   //Sprema promjene u newIngredient inputima
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -48,24 +55,23 @@ const NewIngredient = ({ setIngredients, ingredients }) => {
     }
   };
 
-  const [newIngredient, setNewIngredient] = useState({
-    name: "",
-    quantity: "",
-    unit: "kg",
-    expiery_date: "",
-  });
-
   return (
     <div className="new_ingredient_div">
       <p>Add new Ingredient:</p>
-      <TextField
+      <FuzzyInput
+        handleChange={handleChange}
+        newIngredient={newIngredient}
+        setNewIngredient={setNewIngredient}
+        searchValue="ingredients"
+      />
+      {/* <TextField
         name="name"
         label="Ingredient"
         color="secondary"
         size="small"
         focused
         onChange={handleChange}
-      />
+      /> */}
       <TextField
         name="quantity"
         className="quantity_text_field"
@@ -74,6 +80,7 @@ const NewIngredient = ({ setIngredients, ingredients }) => {
         size="small"
         focused
         onChange={handleChange}
+        type="number"
       />
 
       <Select
