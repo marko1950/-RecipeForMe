@@ -1,4 +1,3 @@
-import React from "react";
 import Navbar from "../components/core/navbar/Navbar";
 import chefs_hat from "../assets/chefs_hat.png";
 import OptionCard from "../components/Homepage/OptionCard";
@@ -18,7 +17,7 @@ const HomePage = () => {
             <img src={chefs_hat} className="w-10" />
           </div>
           <div className="text-center ">
-            <h1 className="text-black text-[40px] font-bold font-['Roboto'] capitalize leading-[60px]">
+            <h1 className="text-black text-[40px] font-bold font-sans capitalize leading-[60px]">
               RecipeForMe
             </h1>
           </div>
@@ -39,8 +38,8 @@ const HomePage = () => {
         </div>
       </section>
 
-      <h2 className="text-black text-3xl font-normal font-['Roboto'] leading-4 text-center mt-10">
-        Start by choosing your cooking plan{" "}
+      <h2 className="text-black text-3xl font-normal font-sans leading-4 text-center mt-10">
+        Start by choosing your cooking plan
       </h2>
 
       <section className="flex mt-20 mx-20 justify-around">

@@ -6,7 +6,7 @@ exports.getIngredients = async (req, res) => {
   try {
     const { rows } = await db.query("SELECT * FROM ingredients");
     res.status(201).json({ status: "success", data: { ingredients: rows } });
-    console.log(results.rows);
+    console.log(rows);
   } catch (error) {
     console.log(error);
   }
