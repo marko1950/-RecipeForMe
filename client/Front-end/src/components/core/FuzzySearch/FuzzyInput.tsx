@@ -4,6 +4,7 @@ import FuzzyTable from "./FuzzyTable";
 import { useState, useMemo, useEffect, useRef } from "react";
 import ingredients from "./ingredients.json";
 import debounce from "lodash.debounce";
+import { PropsFuzzyInput } from "../../../types/pantry/fuzzySearch.types";
 
 /* 
 Work flow: Entering an ingredient triggers handleChange which updates the state newIngredient. 
@@ -14,9 +15,9 @@ the table stops rendering (isSelected is used for connditional rendering). As so
 search bar, the process starts all over again. useEffect is used for clearing memory.
 */
 
-const FuzzyInput = ({ newIngredient, setNewIngredient, searchValue }) => {
-  const [searchResults, setSearchResults] = useState([]); //fuzzy search results (list of ingredients)
-  const [isSelected, setIsSelected] = useState(false); //its used for enabling and preventing table to render
+const FuzzyInput = ({ newIngredient, setNewIngredient }: PropsFuzzyInput) => {
+  const [searchResults, setSearchResults] = useState<string[]>([]); //fuzzy search results (list of ingredients)
+  const [isSelected, setIsSelected] = useState<boolean>(false); //its used for enabling and preventing table to render
   const options = {
     includeScore: true,
     includeMatches: true,
@@ -24,7 +25,7 @@ const FuzzyInput = ({ newIngredient, setNewIngredient, searchValue }) => {
   };
 
   const fuse = new Fuse(ingredients, options);
-  const handleSearch = (value) => {
+  const handleSearch = (value: string) => {
     // If the search is empty it gets empty string, otherwise it does a fuzzy search
     if (value.length !== 0) {
       const results = fuse.search(value);
@@ -36,9 +37,9 @@ const FuzzyInput = ({ newIngredient, setNewIngredient, searchValue }) => {
     setIsSelected(false);
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     const { name, value } = event.target;
-    setNewIngredient((prevState) => ({
+    setNewIngredient((prevState: any) => ({
       ...prevState,
       [name]: value,
     }));
@@ -53,11 +54,11 @@ const FuzzyInput = ({ newIngredient, setNewIngredient, searchValue }) => {
     };
   }, [debouncedHandleSearch]);
 
-  const tableRef = useRef();
+  const tableRef = useRef<HTMLDivElement | null>(null);
 
   //if something else than the table is clicked, it removes the table
   useEffect(() => {
-    const handleBodyClick = (event) => {
+    const handleBodyClick = (event: any) => {
       if (
         tableRef.current &&
         !event.composedPath().includes(tableRef.current)

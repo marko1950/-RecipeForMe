@@ -7,11 +7,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
-import { useEffect } from "react";
 import axios from "axios";
+import { PropsPantryTable } from "../../types/pantry/pantryTable.types";
 
-export default function PantryTable({ setIngredients, ingredients }) {
-  const deleteIngredient = async (ingredient_id) => {
+const PantryTable = ({ setIngredients, ingredients }: PropsPantryTable) => {
+  const deleteIngredient = async (ingredient_id: string) => {
     try {
       await axios.delete(
         `http://localhost:3005/api/v1/ingredients/${ingredient_id}`
@@ -85,4 +85,6 @@ export default function PantryTable({ setIngredients, ingredients }) {
       </Table>
     </TableContainer>
   );
-}
+};
+
+export default PantryTable;

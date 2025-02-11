@@ -1,11 +1,12 @@
 import React, { forwardRef } from "react";
+import { PropsFuzzyTable } from "../../../types/pantry/fuzzySearch.types";
 
-const FuzzyTable = forwardRef(
+const FuzzyTable = forwardRef<HTMLDivElement, PropsFuzzyTable>(
   ({ searchResults, setNewIngredient, setIsSelected }, ref) => {
-    //Sets a value from a row to the input bar when clicked
-    const handleClick = (event) => {
-      const value = event.target.outerText;
-      setNewIngredient((prevState) => ({
+    // Sets a value from a row to the input bar when clicked
+    const handleClick = (event: React.MouseEvent<HTMLTableCellElement>) => {
+      const value = event.currentTarget.innerText;
+      setNewIngredient((prevState: any) => ({
         ...prevState,
         name: value,
       }));
@@ -19,15 +20,7 @@ const FuzzyTable = forwardRef(
           <tbody>
             {searchResults.slice(0, 6).map((ingredient, index) => (
               <tr key={index}>
-                <td
-                  name={ingredient}
-                  value={ingredient}
-                  onClick={(event) => {
-                    handleClick(event);
-                  }}
-                >
-                  {ingredient}
-                </td>
+                <td onClick={handleClick}>{ingredient}</td>
               </tr>
             ))}
           </tbody>

@@ -2,11 +2,9 @@ const db = require("../db");
 
 //get all ingredients from the pantry
 exports.getIngredients = async (req, res) => {
-  console.log(req.body);
   try {
     const { rows } = await db.query("SELECT * FROM ingredients");
     res.status(201).json({ status: "success", data: { ingredients: rows } });
-    console.log(rows);
   } catch (error) {
     console.log(error);
   }
@@ -34,7 +32,7 @@ exports.addQuantity = async (req, res) => {
   const { quantity } = req.body;
   try {
     const results = await db.query(
-      "UPDATE ingredients SET quantity = $1 WHERE ingredient_id = $2",
+      "UPDATE ingredients SET quantity = $1 WHERE ingredient_id = $2 RETURNING *",
       [quantity, ingredientId]
     );
     res

@@ -4,17 +4,20 @@ import { useState } from "react";
 import "../../../src/styles/Pantry.css";
 import axios from "axios";
 import FuzzyInput from "../core/FuzzySearch/FuzzyInput";
+import { PropsNewIngredient } from "../../types/pantry/ingredient.types";
 
-const NewIngredient = ({ setIngredients, ingredients }) => {
+const NewIngredient = ({ setIngredients, ingredients }: PropsNewIngredient) => {
   const [newIngredient, setNewIngredient] = useState({
+    ingredient_id: "",
     name: "",
-    quantity: "",
+    quantity: 0,
     unit: "kg",
     expiry_date: "",
   });
   //Sprema promjene u newIngredient inputima
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     const { name, value } = event.target;
+    console.log(typeof value);
     setNewIngredient((prevState) => ({
       ...prevState,
       [name]: value,
@@ -59,10 +62,8 @@ const NewIngredient = ({ setIngredients, ingredients }) => {
     <div className="new_ingredient_div">
       <p>Add new Ingredient:</p>
       <FuzzyInput
-        handleChange={handleChange}
         newIngredient={newIngredient}
         setNewIngredient={setNewIngredient}
-        searchValue="ingredients"
       />
       {/* <TextField
         name="name"
@@ -81,6 +82,8 @@ const NewIngredient = ({ setIngredients, ingredients }) => {
         focused
         onChange={handleChange}
         type="number"
+        inputProps={{ min: 0 }} // Prevents negative numbers
+        value={newIngredient.quantity}
       />
 
       <Select
