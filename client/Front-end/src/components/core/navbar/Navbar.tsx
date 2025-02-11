@@ -10,7 +10,7 @@ const Navbar = () => {
             </p>
           </button>
         </div>
-        <div className="px-4 py-2.5 bg-[#795548] rounded-lg  shadow-[0px_4px_6px_-1px_rgba(33,33,33,0.20)] justify-center items-center gap-2 flex overflow-hidden">
+        <div className="px-4 py-2.5 bg-[#E65100] rounded-lg  shadow-[0px_4px_6px_-1px_rgba(33,33,33,0.20)] justify-center items-center gap-2 flex overflow-hidden">
           <button>
             <p className="text-white text-xs font-bold font-sans uppercase leading-[18px]">
               Sign in

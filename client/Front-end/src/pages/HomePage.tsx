@@ -6,6 +6,7 @@ import Recipe_book_image from "../assets/recipe_book.png";
 import Meal_planner_image from "../assets/meal_planner.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { cardTextContent } from "../strings/strings.json";
 
 const HomePage = () => {
   return (
@@ -31,7 +32,7 @@ const HomePage = () => {
           placeholder="search for a recipe"
           required
         />
-        <div className="h-10 px-4 py-5 bg-[#795548] rounded-lg  shadow-[0px_4px_6px_-1px_rgba(33,33,33,0.20)] justify-center items-center  inline-flex">
+        <div className="h-10 px-4 py-5 bg-[#E65100] rounded-lg  shadow-[0px_4px_6px_-1px_rgba(33,33,33,0.20)] justify-center items-center  inline-flex">
           <button className="w-4 h-6 overflow-hidden">
             <FontAwesomeIcon icon={faSearch} style={{ color: "white" }} />
           </button>
@@ -45,22 +46,28 @@ const HomePage = () => {
       <section className="flex mt-20 mx-20 justify-around">
         <OptionCard
           name="My pantry"
-          buttonColor="#81C784"
+          buttonColor="#339933"
+          hoverColor="#81C784"
           image={Pantry_image}
           pathToNavigate="/pantry"
+          cardTextContext={cardTextContent.Pantry}
         />
         <OptionCard
           name="Recipe book"
-          buttonColor="#FF8A65"
+          buttonColor="#c84310"
           extraClasses="-mt-8"
+          hoverColor="#FF8A65"
           image={Recipe_book_image}
           pathToNavigate="/recipes"
+          cardTextContext={cardTextContent.RecipeBook}
         />
         <OptionCard
           name="Meal planner"
-          buttonColor="#64B5F6"
+          buttonColor="#0067b3"
+          hoverColor="#64B5F6"
           image={Meal_planner_image}
           pathToNavigate="/meal-scheduler"
+          cardTextContext={cardTextContent.MealPlanner}
         />
       </section>
 
