@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RecipeDetails from "./components/RecipeSearch/RecipeDetails";
 import NewRecipe from "./components/NewRecipe/NewRecipe";
 import MealScheduler from "./pages/MealScheduler";
-import Register from "./pages/Register";
+import Register from "./components/Registration/Register";
 import Login from "./pages/Login";
 
 function App() {

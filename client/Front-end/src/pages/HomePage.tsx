@@ -40,7 +40,7 @@ const HomePage = () => {
       </section>
 
       <h2 className="text-black text-3xl font-normal font-sans leading-4 text-center mt-10">
-        Start by choosing your cooking plan
+        Start by choosing your cooking plan.
       </h2>
 
       <section className="flex mt-20 mx-20 justify-around">
