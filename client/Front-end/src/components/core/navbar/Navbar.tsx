@@ -21,7 +21,7 @@ const Navbar = () => {
             onClick={() => setIsRegisterOpen(true)} // Open overlay on click
           >
             <p className="text-white text-xs font-bold font-sans uppercase leading-[18px]">
-              Sign in
+              Sign up
             </p>
           </div>
         </div>
