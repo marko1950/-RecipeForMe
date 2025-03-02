@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { useState, useContext } from "react";
 import RecipesContext from "../../context/RecipesContext";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import api from "../../api/api";
+import spoonacularApi from "../../api/spoonacularApi"; // Spoonacular API
 import "../../styles/RecipeDetails.css";
 import Heart from "react-animated-heart";
 
@@ -21,9 +22,7 @@ const RecipeDetails = () => {
       try {
         let result;
         if (params.recipeId > 5000000 && params.recipeId < 5100000) {
-          result = await axios.get(
-            `http://localhost:3005/api/v1/recipes/${params.recipeId}`
-          );
+          result = await api.get(`/recipes/${params.recipeId}`);
           setUserMadeRecipe(true);
           setRecipe(result.data);
 
@@ -42,8 +41,8 @@ const RecipeDetails = () => {
           setCuisines(result.data?.cuisines || ["Unkown"]);
         } else {
           {
-            result = await axios.get(
-              `https://api.spoonacular.com/recipes/${params.recipeId}/information?apiKey=250f0f0d9b0a47b38849a59921da109d`
+            result = await spoonacularApi.get(
+              `/recipes/${params.recipeId}/information`
             );
             setRecipe(result.data);
             setInstructions(result.data.analyzedInstructions[0]?.steps || []);
@@ -62,7 +61,7 @@ const RecipeDetails = () => {
 
   const handleButtonClick = async () => {
     try {
-      const result = await axios.post(`http://localhost:3005/api/v1/recipes`, {
+      const result = await api.post(`/recipes`, {
         recipe_id: recipe.id,
         title: recipe.title,
         image: recipe.image,

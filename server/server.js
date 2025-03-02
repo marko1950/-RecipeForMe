@@ -6,8 +6,12 @@ const port = process.env.port || 3001;
 app.use(morgan("dev"));
 app.use(express.json());
 const cors = require("cors");
-app.use(cors());
-
+app.use(
+  cors({
+    origin: "http://localhost:5175",
+    credentials: true,
+  })
+);
 const verifyJWT = require("./src/middlewares/verifyJWT");
 const cookieParser = require("cookie-parser");
 app.use(express.urlencoded({ extended: false }));
@@ -26,8 +30,8 @@ app.use("/api/v1/refresh", refreshTokenRoute);
 app.use("/api/v1/logout", logoutRoute);
 
 //Authorization needed routes
-app.use(verifyJWT);
 app.use("/api/v1/recipes", recipesRoute);
+app.use(verifyJWT);
 app.use("/api/v1/ingredients", pantryRoute);
 
 app.listen(port, () => {

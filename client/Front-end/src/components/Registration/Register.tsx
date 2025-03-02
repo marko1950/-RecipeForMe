@@ -8,14 +8,22 @@ import {
   faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "../../api/api.js";
 
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const USERNAME_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PASSWORD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z0-9@$!%*?&]{8,24}$/;
+const REGISTER_URL = "/register";
 
 const Register = ({ onClose }: { onClose: () => void }) => {
+  const emailRef = useRef<HTMLInputElement>(null);
   const userRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLParagraphElement>(null);
+
+  const [email, setEmail] = useState<string>("");
+  const [validEmail, setValidEmail] = useState(false);
+  const [emailFocus, setEmailFocus] = useState(false);
 
   const [user, setUser] = useState<string>("");
   const [validName, setValidName] = useState(false);
@@ -33,10 +41,15 @@ const Register = ({ onClose }: { onClose: () => void }) => {
     useState<boolean>(false);
 
   const [errorMsg, setErrorMsg] = useState<string>("");
+  const [success, setSucess] = useState<boolean>(false);
   const [termsCheck, setTermsCheck] = useState<boolean>(false);
+  console.log("Succes is " + success);
   useEffect(() => {
-    if (userRef.current) userRef.current.focus();
+    if (emailRef.current) emailRef.current.focus();
   }, []);
+  useEffect(() => {
+    setValidEmail(EMAIL_REGEX.test(email));
+  }, [email]);
 
   useEffect(() => {
     setValidName(USERNAME_REGEX.test(user));
@@ -56,9 +69,31 @@ const Register = ({ onClose }: { onClose: () => void }) => {
     e.preventDefault();
     const v1 = USERNAME_REGEX.test(user);
     const v2 = PASSWORD_REGEX.test(pwd);
-    if (!v1 || !v2) {
+    const v3 = EMAIL_REGEX.test(email);
+    if (!v1 || !v2 || !v3) {
       setErrorMsg("Invalid entry");
       return;
+    }
+    try {
+      const response = await axios.post(
+        REGISTER_URL,
+        JSON.stringify({ user, pwd, email }),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      console.log(response.data);
+      setSucess(true);
+    } catch (err) {
+      if (!err?.response) {
+        setErrorMsg("No Server Response");
+      } else if (err.response?.status === 409) {
+        setErrorMsg("Username Taken");
+      } else {
+        setErrorMsg("Registartion Failed");
+      }
+      errRef.current.focus();
     }
   };
 
@@ -87,6 +122,44 @@ const Register = ({ onClose }: { onClose: () => void }) => {
         </p>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
+          {/* Email Input */}
+
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium">
+              Email
+              {validEmail && (
+                <FontAwesomeIcon
+                  icon={faCircleCheck}
+                  className="text-green-500 ml-2"
+                />
+              )}
+              {!validEmail && email && (
+                <FontAwesomeIcon
+                  icon={faCircleXmark}
+                  className="text-red-500 ml-2"
+                />
+              )}
+            </label>
+            <input
+              type="email"
+              id="email"
+              placeholder="user123@gmail.com"
+              ref={emailRef}
+              className="w-full p-2 border rounded mt-1"
+              autoComplete="off"
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              aria-invalid={validEmail ? "false" : "true"}
+              onFocus={() => setEmailFocus(true)}
+              onBlur={() => setEmailFocus(false)}
+            />
+            {emailFocus && email && !validEmail && (
+              <p className="text-xs text-red-600 mt-1">
+                <FontAwesomeIcon icon={faInfoCircle} /> Must be a valid email
+                address. Example: user@example.com
+              </p>
+            )}
+          </div>
           {/* Username Input */}
           <div>
             <label htmlFor="username" className="block text-sm font-medium">
@@ -243,7 +316,13 @@ const Register = ({ onClose }: { onClose: () => void }) => {
                 ? "bg-[#E65100] hover:bg-[#F57C00]"
                 : "bg-gray-400 cursor-not-allowed"
             }`}
-            disabled={!validName || !validPwd || !validMatch || !termsCheck}
+            disabled={
+              !validName ||
+              !validPwd ||
+              !validMatch ||
+              !termsCheck ||
+              !validEmail
+            }
           >
             Sign up
           </button>

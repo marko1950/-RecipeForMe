@@ -7,18 +7,14 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
-import axios from "axios";
+import api from "../../api/api";
 import { PropsPantryTable } from "../../types/pantry/pantryTable.types";
 
 const PantryTable = ({ setIngredients, ingredients }: PropsPantryTable) => {
   const deleteIngredient = async (ingredient_id: string) => {
     try {
-      await axios.delete(
-        `http://localhost:3005/api/v1/ingredients/${ingredient_id}`
-      );
-      const updatedResult = await axios.get(
-        `http://localhost:3005/api/v1/ingredients`
-      );
+      await api.delete(`/ingredients/${ingredient_id}`);
+      const updatedResult = await api.get(`/ingredients`);
       setIngredients(updatedResult.data.data.ingredients);
     } catch (error) {
       console.log(error);

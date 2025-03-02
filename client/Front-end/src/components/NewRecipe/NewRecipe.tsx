@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import api from "../../api/api";
 import { useState } from "react";
 import Heart from "react-animated-heart";
 import "../../styles/NewRecipe.css";
@@ -35,7 +35,7 @@ const NewRecipe = () => {
         step: item.context,
       }));
       const newIngredients = ingredients.slice(0, -1);
-      const result = await axios.post(`http://localhost:3005/api/v1/recipes`, {
+      const result = await api.post(`/recipes`, {
         recipe_id: randomNumInRange,
         title: newRecipe.title,
         image: newRecipe.image,

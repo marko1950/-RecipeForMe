@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, ReactNode } from "react";
-import axios from "axios";
+import api from "../api/api";
 import { Ingredient } from "../types/pantry/ingredient.types";
 
 // Define the shape of our context value
@@ -28,9 +28,7 @@ export const RecipesProvider: React.FC<RecipesProviderProps> = ({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await axios.get(
-          "http://localhost:3005/api/v1/ingredients"
-        );
+        const result = await api.get("/ingredients");
         setIngredients(result.data.data.ingredients);
       } catch (error) {
         console.error(error);

@@ -1,6 +1,7 @@
 import React from "react";
 import "../../styles/RecipeList.css";
-import axios from "axios";
+import api from "../../api/api";
+import spoonacularApi from "../../api/spoonacularApi";
 import Heart from "react-animated-heart";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -9,15 +10,15 @@ const RecipeListElement = ({ recipe, typeOfList, recipes, setRecipes }) => {
   const [isClick, setClick] = useState(false);
   const handleButtonClick = async () => {
     try {
-      const firstResult = await axios.get(
-        `https://api.spoonacular.com/recipes/${recipe.id}/information?apiKey=250f0f0d9b0a47b38849a59921da109d`
+      const firstResult = await spoonacularApi.get(
+        `/recipes/${recipe.id}/information`
       );
       let ingredients = [];
       firstResult.data.extendedIngredients.forEach((element) => {
         ingredients = [...ingredients, element.original];
       });
 
-      const result = await axios.post(`http://localhost:3005/api/v1/recipes`, {
+      const result = await api.post(`/recipes`, {
         recipe_id: recipe.id,
         title: recipe.title,
         image: recipe.image,
@@ -35,9 +36,9 @@ const RecipeListElement = ({ recipe, typeOfList, recipes, setRecipes }) => {
 
   const handleDeleteButtonClick = async () => {
     try {
-      await axios.delete(`http://localhost:3005/api/v1/recipes/${recipe.id}`);
-      const result = await axios.get(`http://localhost:3005/api/v1/recipes/`);
-      setRecipes(result.data.data?.recipes || {});
+      await api.delete(`/recipes/${recipe.id}`);
+      const results = await api.get(`/recipes`);
+      setRecipes(results.data.data?.recipes || {});
     } catch (error) {
       console.log(error);
     }

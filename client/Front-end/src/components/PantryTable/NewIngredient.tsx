@@ -2,7 +2,7 @@ import React from "react";
 import { TextField, Button, Select, MenuItem } from "@mui/material";
 import { useState } from "react";
 import "../../../src/styles/Pantry.css";
-import axios from "axios";
+import api from "../../api/api";
 import FuzzyInput from "../core/FuzzySearch/FuzzyInput";
 import { PropsNewIngredient } from "../../types/pantry/ingredient.types";
 
@@ -35,19 +35,13 @@ const NewIngredient = ({ setIngredients, ingredients }: PropsNewIngredient) => {
       if (existingIngredient) {
         const updatedQuantity =
           Number(existingIngredient.quantity) + Number(newIngredient.quantity);
-        await axios.put(
-          `http://localhost:3005/api/v1/ingredients/${existingIngredient.ingredient_id}`,
-          { quantity: updatedQuantity }
-        );
-        const updatedResult = await axios.get(
-          `http://localhost:3005/api/v1/ingredients`
-        );
+        await api.put(`/ingredients/${existingIngredient.ingredient_id}`, {
+          quantity: updatedQuantity,
+        });
+        const updatedResult = await api.get(`/ingredients`);
         setIngredients(updatedResult.data.data.ingredients);
       } else {
-        const result = await axios.post(
-          "http://localhost:3005/api/v1/ingredients",
-          newIngredient
-        );
+        const result = await api.post("/ingredients", newIngredient);
         setIngredients((prevState) => [
           ...prevState,
           result.data.data.ingredient,

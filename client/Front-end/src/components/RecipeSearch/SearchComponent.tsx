@@ -2,7 +2,8 @@ import React from "react";
 import "../../styles/SearchComponentStyle.css";
 import TextField from "@mui/material/TextField";
 import { useState, useContext } from "react";
-import axios from "axios";
+import spoonacularApi from "../../api/spoonacularApi"; // Spoonacular API
+
 import RecipesContext from "../../context/RecipesContext";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -19,8 +20,8 @@ const SearchComponent = ({ setRecipes, setTypeOfList }) => {
 
   const handleButtonClick = async () => {
     try {
-      const result = await axios.get(
-        `https://api.spoonacular.com/recipes/complexSearch?query=${searchQuery}&apiKey=250f0f0d9b0a47b38849a59921da109d&instructionsRequired=true`
+      const result = await spoonacularApi.get(
+        `/recipes/complexSearch?query=${searchQuery}`
       );
       setRecipes(result.data.results);
       setTypeOfList("Best Search Results");
@@ -48,13 +49,13 @@ const SearchComponent = ({ setRecipes, setTypeOfList }) => {
     const ingredientsQueryString = toQueryString(AllIngredients);
     //apples,+flour,+sugar
     try {
-      const result = await axios.get(
-        `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredientsQueryString}&apiKey=250f0f0d9b0a47b38849a59921da109d&instructionsRequired=true`
+      const result = await spoonacularApi.get(
+        `/recipes/findByIngredients?ingredients=${ingredientsQueryString}`
       );
       setRecipes(result.data);
       setTypeOfList("Recipes That Suit Your Ingredients");
     } catch (error) {
-      console.log(erorr);
+      console.log(error);
     }
   };
 
