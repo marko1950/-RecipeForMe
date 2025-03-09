@@ -4,8 +4,8 @@ const jwt = require("jsonwebtoken");
 const db = require("../db");
 
 exports.handleLogin = async (req, res) => {
-  const { user, pwd } = req.body;
-  if (!user || !pwd) {
+  const { email, pwd } = req.body;
+  if (!email || !pwd) {
     return res
       .status(400)
       .json({ message: "Username and password are required" });
@@ -13,8 +13,8 @@ exports.handleLogin = async (req, res) => {
 
   try {
     // Query the database to find the user
-    const { rows } = await db.query("SELECT * FROM users WHERE username = $1", [
-      user,
+    const { rows } = await db.query("SELECT * FROM users WHERE email = $1", [
+      email,
     ]);
     const foundUser = rows[0];
 
@@ -29,7 +29,7 @@ exports.handleLogin = async (req, res) => {
     const accessToken = jwt.sign(
       { username: foundUser.username },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "30s" }
+      { expiresIn: "30m" }
     );
     const refreshToken = jwt.sign(
       { username: foundUser.username },
@@ -38,9 +38,9 @@ exports.handleLogin = async (req, res) => {
     );
 
     // Store the refresh token in the database
-    await db.query("UPDATE users SET refresh_token = $1 WHERE username = $2", [
+    await db.query("UPDATE users SET refresh_token = $1 WHERE email = $2", [
       refreshToken,
-      user,
+      email,
     ]);
 
     // Set cookie with refresh token
@@ -52,7 +52,13 @@ exports.handleLogin = async (req, res) => {
     });
 
     // Send access token in response
-    res.json({ accessToken });
+    const userResponse = {
+      user_id: foundUser.user_id,
+      username: foundUser.username,
+      email: foundUser.email,
+      profilepicutre: foundUser.profilepicutre,
+    };
+    res.json({ user: userResponse, accessToken });
   } catch (error) {
     console.error("Login error:", error);
     res.sendStatus(500); // Internal Server Error

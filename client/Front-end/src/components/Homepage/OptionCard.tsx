@@ -15,7 +15,6 @@ const OptionCard = ({
   const handleRedirect = (path) => {
     navigate(path);
   };
-  console.log(cardTextContext);
   return (
     <div
       className={`group relative w-96 h-72 bg-white rounded-2xl overflow-hidden shadow-2xl border-2 border-[#d9d9d9] ${extraClasses}`}

@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "../../api/api.js";
+import { PropsRegister } from "../../types/registration/register.js";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const USERNAME_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
@@ -16,7 +17,7 @@ const PASSWORD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z0-9@$!%*?&]{8,24}$/;
 const REGISTER_URL = "/register";
 
-const Register = ({ onClose }: { onClose: () => void }) => {
+const Register: React.FC<PropsRegister> = ({ onClose, setIsRegisterOpen }) => {
   const emailRef = useRef<HTMLInputElement>(null);
   const userRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLParagraphElement>(null);
@@ -41,9 +42,8 @@ const Register = ({ onClose }: { onClose: () => void }) => {
     useState<boolean>(false);
 
   const [errorMsg, setErrorMsg] = useState<string>("");
-  const [success, setSucess] = useState<boolean>(false);
   const [termsCheck, setTermsCheck] = useState<boolean>(false);
-  console.log("Succes is " + success);
+
   useEffect(() => {
     if (emailRef.current) emailRef.current.focus();
   }, []);
@@ -84,21 +84,21 @@ const Register = ({ onClose }: { onClose: () => void }) => {
         }
       );
       console.log(response.data);
-      setSucess(true);
+      setIsRegisterOpen(false);
     } catch (err) {
       if (!err?.response) {
         setErrorMsg("No Server Response");
       } else if (err.response?.status === 409) {
-        setErrorMsg("Username Taken");
+        setErrorMsg("Username or email already taken");
       } else {
-        setErrorMsg("Registartion Failed");
+        setErrorMsg("Registration Failed");
       }
       errRef.current.focus();
     }
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 ">
+    <section className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 ">
       <div className="bg-white p-6 rounded-lg shadow-lg w-96 relative ">
         {/* Close Button */}
 
@@ -143,7 +143,7 @@ const Register = ({ onClose }: { onClose: () => void }) => {
             <input
               type="email"
               id="email"
-              placeholder="user123@gmail.com"
+              placeholder="john123@gmail.com"
               ref={emailRef}
               className="w-full p-2 border rounded mt-1"
               autoComplete="off"
@@ -181,6 +181,7 @@ const Register = ({ onClose }: { onClose: () => void }) => {
               type="text"
               id="username"
               ref={userRef}
+              placeholder="john123"
               className="w-full p-2 border rounded mt-1"
               autoComplete="off"
               onChange={(e) => setUser(e.target.value)}
@@ -331,13 +332,13 @@ const Register = ({ onClose }: { onClose: () => void }) => {
 
           <p className="text-center text-sm">
             Already have an account?&nbsp;
-            <a href="#" className="text-blue-500 hover:underline font-semibold">
+            <a href="#" className="text-blue-600 hover:underline font-semibold">
               Log In
             </a>
           </p>
         </form>
       </div>
-    </div>
+    </section>
   );
 };
 

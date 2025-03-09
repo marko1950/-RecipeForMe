@@ -1,8 +1,10 @@
 import { useState } from "react";
 import Register from "../../Registration/Register"; // Import the overlay card component
+import Login from "../../Registration/Login";
 
 const Navbar = () => {
-  const [isRegisterOpen, setIsRegisterOpen] = useState(false); // State to control overlay
+  const [isRegisterOpen, setIsRegisterOpen] = useState<boolean>(false); // State to control overlay
+  const [isLoginOpen, setIsLoginOpen] = useState<boolean>(false); // State to control overlay
 
   return (
     <>
@@ -10,7 +12,7 @@ const Navbar = () => {
         <div className="grow shrink basis-0 h-10 px-8 justify-start items-center gap-8 flex">
           <div className="grow shrink basis-0 h-6" />
           <div className="justify-start items-center gap-4 flex">
-            <button>
+            <button onClick={() => setIsLoginOpen(true)}>
               <p className="text-[#212121] text-sm font-medium font-sans leading-[21px]">
                 Log in
               </p>
@@ -28,7 +30,20 @@ const Navbar = () => {
       </nav>
 
       {/* Register Overlay */}
-      {isRegisterOpen && <Register onClose={() => setIsRegisterOpen(false)} />}
+      {isRegisterOpen && (
+        <Register
+          onClose={() => setIsRegisterOpen(false)}
+          setIsRegisterOpen={setIsRegisterOpen}
+        />
+      )}
+
+      {/* Login Overlay */}
+      {isLoginOpen && (
+        <Login
+          onClose={() => setIsLoginOpen(false)}
+          setIsLoginOpen={setIsLoginOpen}
+        />
+      )}
     </>
   );
 };
